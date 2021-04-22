@@ -166,6 +166,14 @@ This plugin contains all of the standard SpotBugs detectors.
   Detectors
   **********************************************************************
    -->
+  <Detector class="edu.umd.cs.findbugs.detect.AssertArgs">
+    <Details>
+<![CDATA[
+<p> Finds assertions that validates public method arguments.
+</p>
+]]>
+    </Details>
+  </Detector>
   <Detector class="edu.umd.cs.findbugs.detect.OverridingMethodsMustInvokeSuperDetector">
     <Details>
 <![CDATA[
@@ -1694,6 +1702,19 @@ factory pattern to create these objects.</p>
   BugPatterns
   **********************************************************************
    -->
+  <BugPattern type="DA_DONT_ASSERT_ARGS">
+    <ShortDescription> Never use assertions to validate arguments of public methods</ShortDescription>
+    <LongDescription> Assert validates method argument at {1}. If assertions are disabled, there won't be any argument validation. </LongDescription>
+    <Details>
+      <![CDATA[
+            <p>Never use assertions to validate arguments of public methods.</p>
+
+            <p>See <https://wiki.sei.cmu.edu/confluence/display/java/MET01-J.+Never+use+assertions+to+validate+method+arguments><code>SEI CERT Rule MET01</code></a>
+            for more information.
+            </p>
+            ]]>
+    </Details>
+  </BugPattern>
 
   <BugPattern type="JUA_DONT_ASSERT_INSTANCEOF_IN_TESTS">
     <ShortDescription> Asserting value of instanceof in tests is not recommended. </ShortDescription>
@@ -8635,4 +8656,5 @@ after the call to initLogging, the logger configuration is lost
   <BugCode abbrev="DL">Unintended contention or possible deadlock due to locking on shared objects</BugCode>
   <BugCode abbrev="JUA">Problems in JUnit Assertions</BugCode>
   <BugCode abbrev="EOS">Bad End of Stream check</BugCode>
+  <BugCode abbrev="DA">Don't use assertipns to validate method arguments</BugCode>
 </MessageCollection>
