@@ -32,7 +32,8 @@ public abstract class AssertDetector extends OpcodeStackDetector {
         if (seen == Const.GETSTATIC && "$assertionsDisabled".equals(getNameConstantOperand())) {
             inAssert = true;
         }
-        if (seen == Const.INVOKESPECIAL && getClassConstantOperand().equals("java/lang/AssertionError")) {
+        if (seen == Const.NEW && getClassConstantOperand().equals("java/lang/AssertionError")) {
+            //if (seen == Const.INVOKESPECIAL && getClassConstantOperand().equals("java/lang/AssertionError")) {
             resetState();
         }
     }
