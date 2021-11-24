@@ -105,7 +105,7 @@ public class AssertSideEffect extends AssertDetector {
             StringBuilder sb = new StringBuilder(getClassConstantOperand());
             sb.append(":");
             sb.append(getNameConstantOperand());
-            if (isSideEffectMethod(sb.toString())) {
+            if (isSideEffectMethod(getNameConstantOperand())) {
                 BugInstance bug = new BugInstance(this, "DA_DONT_ASSERT_SIDE_EFFECT_METHOD", NORMAL_PRIORITY)
                         .addClassAndMethod(this)
                         .addSourceLine(this, getPC());
