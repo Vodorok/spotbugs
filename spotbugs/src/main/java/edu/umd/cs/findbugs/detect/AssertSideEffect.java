@@ -7,10 +7,7 @@ import org.apache.bcel.classfile.Method;
 
 import edu.umd.cs.findbugs.BugInstance;
 import edu.umd.cs.findbugs.BugReporter;
-import edu.umd.cs.findbugs.OpcodeStack;
-import edu.umd.cs.findbugs.OpcodeStack.Item;
 import edu.umd.cs.findbugs.ba.ClassContext;
-import edu.umd.cs.findbugs.ba.XMethod;
 import edu.umd.cs.findbugs.classfile.Global;
 
 import edu.umd.cs.findbugs.detect.FindNoSideEffectMethods.MethodSideEffectStatus;
@@ -25,7 +22,7 @@ import java.util.ArrayList;
 public class AssertSideEffect extends AssertDetector {
 
     private static List<String> SideEffectList;
-    static{
+    static {
         SideEffectList = new ArrayList<String>();
         SideEffectList.add("java/util/List:remove");
     }
@@ -44,19 +41,22 @@ public class AssertSideEffect extends AssertDetector {
      */
     @Override
     public void visit(Method obj) {
-        if (!obj.isPublic()) return;
+        if (!obj.isPublic())
+            return;
     }
 
     @Override
     public void visitClassContext(ClassContext classContext) {
         JavaClass ctx = classContext.getJavaClass();
         // Break out of analyzing this class if not public
-        if (!ctx.isPublic()) return;
+        if (!ctx.isPublic())
+            return;
         super.visitClassContext(classContext);
     }
 
     private boolean isSideEffectMethod(String method) {
-        if (SideEffectList.contains(method)) return true;
+        if (SideEffectList.contains(method))
+            return true;
         if (noSideEffectMethods.is(getMethodDescriptorOperand(), MethodSideEffectStatus.OBJ, MethodSideEffectStatus.SE)) {
             return true;
         }
@@ -66,9 +66,9 @@ public class AssertSideEffect extends AssertDetector {
     private boolean isMethodCall(int seen) {
         boolean methodCall = false;
         if (seen == Const.INVOKESTATIC ||
-            seen == Const.INVOKEVIRTUAL ||
-            seen == Const.INVOKEINTERFACE ||
-            seen == Const.INVOKESPECIAL) {
+                seen == Const.INVOKEVIRTUAL ||
+                seen == Const.INVOKEINTERFACE ||
+                seen == Const.INVOKESPECIAL) {
             methodCall = true;
         }
         return methodCall;
@@ -76,20 +76,20 @@ public class AssertSideEffect extends AssertDetector {
 
     private boolean checkSeen(int seen) {
         switch (seen) {
-            case Const.IINC:
-            case Const.ISTORE:
-            case Const.ISTORE_0:
-            case Const.ISTORE_1:
-            case Const.ISTORE_2:
-            case Const.ISTORE_3:
-                return true;
-            default:
-                return false;
+        case Const.IINC:
+        case Const.ISTORE:
+        case Const.ISTORE_0:
+        case Const.ISTORE_1:
+        case Const.ISTORE_2:
+        case Const.ISTORE_3:
+            return true;
+        default:
+            return false;
         }
     }
 
-	@Override
-	void detect(int seen) {
+    @Override
+    void detect(int seen) {
         if (isMethodCall(seen)) {
             StringBuilder sb = new StringBuilder(getClassConstantOperand());
             sb.append(":");
@@ -100,11 +100,11 @@ public class AssertSideEffect extends AssertDetector {
                         .addSourceLine(this, getPC());
                 reportBug(bug);
             }
-        } else if (checkSeen(seen)){
-                BugInstance bug = new BugInstance(this, "DA_DONT_ASSERT_SIDE_EFFECT", NORMAL_PRIORITY)
-                        .addClassAndMethod(this)
-                        .addSourceLine(this, getPC());
-                reportBug(bug);
+        } else if (checkSeen(seen)) {
+            BugInstance bug = new BugInstance(this, "DA_DONT_ASSERT_SIDE_EFFECT", NORMAL_PRIORITY)
+                    .addClassAndMethod(this)
+                    .addSourceLine(this, getPC());
+            reportBug(bug);
         }
-	}
+    }
 }

@@ -29,14 +29,16 @@ public class AssertArgs extends AssertDetector {
      */
     @Override
     public void visit(Method obj) {
-        if (!obj.isPublic()) return;
+        if (!obj.isPublic())
+            return;
     }
 
     @Override
     public void visitClassContext(ClassContext classContext) {
         JavaClass ctx = classContext.getJavaClass();
         // Break out of analyzing this class if not public
-        if (!ctx.isPublic()) return;
+        if (!ctx.isPublic())
+            return;
         super.visitClassContext(classContext);
     }
 
@@ -44,9 +46,10 @@ public class AssertArgs extends AssertDetector {
         XMethod m = getXMethodOperand();
         int numPar = m.getNumParams();
         // Get values from the stack
-        for (int i = 0; i < numPar ; i++) {
+        for (int i = 0; i < numPar; i++) {
             Item item = stack.getStackItem(i);
-            if (item.isInitialParameter()) return true;
+            if (item.isInitialParameter())
+                return true;
         }
         return false;
     }
@@ -54,9 +57,9 @@ public class AssertArgs extends AssertDetector {
     private boolean isMethodCall(int seen) {
         boolean methodCall = false;
         if (seen == Const.INVOKESTATIC ||
-            seen == Const.INVOKEVIRTUAL ||
-            seen == Const.INVOKEINTERFACE ||
-            seen == Const.INVOKESPECIAL) {
+                seen == Const.INVOKEVIRTUAL ||
+                seen == Const.INVOKEINTERFACE ||
+                seen == Const.INVOKESPECIAL) {
             methodCall = true;
         }
         return methodCall;
@@ -65,20 +68,20 @@ public class AssertArgs extends AssertDetector {
     private int checkSeen(int seen) {
         int stackSize = 0;
         switch (seen) {
-            case Const.IFNONNULL:
-            case Const.IFNULL:
-                stackSize = 1;
-                break;
-            case Const.IF_ICMPEQ:
-            case Const.IF_ICMPNE:
-            case Const.IF_ICMPLT:
-            case Const.IF_ICMPLE:
-            case Const.IF_ICMPGT:
-            case Const.IF_ICMPGE:
-                stackSize = 2;
-                break;
-            default:
-                break;
+        case Const.IFNONNULL:
+        case Const.IFNULL:
+            stackSize = 1;
+            break;
+        case Const.IF_ICMPEQ:
+        case Const.IF_ICMPNE:
+        case Const.IF_ICMPLT:
+        case Const.IF_ICMPLE:
+        case Const.IF_ICMPGT:
+        case Const.IF_ICMPGE:
+            stackSize = 2;
+            break;
+        default:
+            break;
         }
         return stackSize;
     }
@@ -89,18 +92,20 @@ public class AssertArgs extends AssertDetector {
         super.resetState();
     }
 
-	@Override
-	void detect(int seen) {
+    @Override
+    void detect(int seen) {
         boolean wasArg = false;
         if (isMethodCall(seen)) {
             // If wasArg have not been found - Nested methods
-            if (!wasArg) wasArg = isInitialArg();
+            if (!wasArg)
+                wasArg = isInitialArg();
         }
         int stackSize = checkSeen(seen);
         if (stackSize > 0) {
             for (int i = 0; i < stackSize; i++) {
                 OpcodeStack.Item item = stack.getStackItem(i);
-                if (!wasArg) wasArg = item.isInitialParameter();
+                if (!wasArg)
+                    wasArg = item.isInitialParameter();
             }
         }
         if (wasArg) {
@@ -110,6 +115,6 @@ public class AssertArgs extends AssertDetector {
             reportBug(bug);
         }
         wasArg = false;
-            //resetState();
-	}
+        //resetState();
+    }
 }

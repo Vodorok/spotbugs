@@ -1,15 +1,9 @@
 package edu.umd.cs.findbugs.detect;
 
 import org.apache.bcel.Const;
-import org.apache.bcel.classfile.JavaClass;
-import org.apache.bcel.classfile.Method;
 
 import edu.umd.cs.findbugs.BugInstance;
 import edu.umd.cs.findbugs.BugReporter;
-import edu.umd.cs.findbugs.OpcodeStack;
-import edu.umd.cs.findbugs.OpcodeStack.Item;
-import edu.umd.cs.findbugs.ba.ClassContext;
-import edu.umd.cs.findbugs.ba.XMethod;
 import edu.umd.cs.findbugs.bcel.OpcodeStackDetector;
 
 /**
@@ -24,7 +18,7 @@ public abstract class AssertDetector extends OpcodeStackDetector {
     public AssertDetector(BugReporter bugReporter) {
         this.bugReporter = bugReporter;
     }
-    
+
     abstract void detect(int seen);
 
     /**
