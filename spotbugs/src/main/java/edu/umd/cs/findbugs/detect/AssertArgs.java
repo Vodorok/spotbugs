@@ -61,6 +61,11 @@ public class AssertArgs extends AssertDetector {
                 seen == Const.INVOKEINTERFACE ||
                 seen == Const.INVOKESPECIAL) {
             methodCall = true;
+            // Edge case for AssertionError ctor
+            // We are not interesed in assert message params
+            if (getClassConstantOperand().equals("java/lang/AssertionError")) {
+                methodCall = false;
+            }
         }
         return methodCall;
     }
