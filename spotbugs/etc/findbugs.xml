@@ -653,6 +653,8 @@
                     reports="EOS_BAD_END_OF_STREAM_CHECK"/>
           <Detector class="edu.umd.cs.findbugs.detect.AssertArgs" speed="fast"
                     reports="DA_DONT_ASSERT_ARGS"/>
+          <Detector class="edu.umd.cs.findbugs.detect.AssertSideEffect" speed="fast"
+                    reports="DA_DONT_ASSERT_SIDE_EFFECT,DA_DONT_ASSERT_SIDE_EFFECT_METHOD"/>
             <!-- Bug Categories -->
            <BugCategory category="NOISE" hidden="true"/>
 
@@ -684,6 +686,8 @@
           <!-- Bug patterns -->
           <BugPattern abbrev="JUA" type="JUA_DONT_ASSERT_INSTANCEOF_IN_TESTS" category="BAD_PRACTICE" experimental="true" />
           <BugPattern abbrev="DA" type="DA_DONT_ASSERT_ARGS" category="SECURITY" />
+          <BugPattern abbrev="DA" type="DA_DONT_ASSERT_SIDE_EFFECT" category="SECURITY" />
+          <BugPattern abbrev="DA" type="DA_DONT_ASSERT_SIDE_EFFECT_METHOD" category="SECURITY" />
           <BugPattern abbrev="CN" type="OVERRIDING_METHODS_MUST_INVOKE_SUPER" category="CORRECTNESS" />
           <BugPattern abbrev="CNT" type="CNT_ROUGH_CONSTANT_VALUE" category="BAD_PRACTICE"/>
 

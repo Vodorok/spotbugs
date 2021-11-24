@@ -174,6 +174,14 @@ This plugin contains all of the standard SpotBugs detectors.
 ]]>
     </Details>
   </Detector>
+  <Detector class="edu.umd.cs.findbugs.detect.AssertSideEffect">
+    <Details>
+<![CDATA[
+<p> Finds assertions with side effects.
+</p>
+]]>
+    </Details>
+  </Detector>
   <Detector class="edu.umd.cs.findbugs.detect.OverridingMethodsMustInvokeSuperDetector">
     <Details>
 <![CDATA[
@@ -1710,6 +1718,34 @@ factory pattern to create these objects.</p>
             <p>Never use assertions to validate arguments of public methods.</p>
 
             <p>See <https://wiki.sei.cmu.edu/confluence/display/java/MET01-J.+Never+use+assertions+to+validate+method+arguments><code>SEI CERT Rule MET01</code></a>
+            for more information.
+            </p>
+            ]]>
+    </Details>
+  </BugPattern>
+
+  <BugPattern type="DA_DONT_ASSERT_SIDE_EFFECT">
+    <ShortDescription> Expressions used in assertions must not produce side effects </ShortDescription>
+    <LongDescription> The expression used in assertion at {1} produces side effect. If assertions are disabled, the expression won't get executed and the result of the method might change. </LongDescription>
+    <Details>
+      <![CDATA[
+            <p>Expressions used in assertions must not produce side effect.</p>
+
+            <p>See <https://wiki.sei.cmu.edu/confluence/display/java/EXP06-J.+Expressions+used+in+assertions+must+not+produce+side+effects><code>SEI CERT Rule EXP06</code></a>
+            for more information.
+            </p>
+            ]]>
+    </Details>
+  </BugPattern>
+
+  <BugPattern type="DA_DONT_ASSERT_SIDE_EFFECT_METHOD">
+    <ShortDescription> Methods invoked in assertions must not produce side effects </ShortDescription>
+    <LongDescription> The method called in assertion at {1} produces side effect. If assertions are disabled, the method invocation won't get executed and the result of the method might change. </LongDescription>
+    <Details>
+      <![CDATA[
+            <p>Expressions used in assertions must not produce side effect.</p>
+
+            <p>See <https://wiki.sei.cmu.edu/confluence/display/java/EXP06-J.+Expressions+used+in+assertions+must+not+produce+side+effects><code>SEI CERT Rule EXP06</code></a>
             for more information.
             </p>
             ]]>
@@ -8656,5 +8692,5 @@ after the call to initLogging, the logger configuration is lost
   <BugCode abbrev="DL">Unintended contention or possible deadlock due to locking on shared objects</BugCode>
   <BugCode abbrev="JUA">Problems in JUnit Assertions</BugCode>
   <BugCode abbrev="EOS">Bad End of Stream check</BugCode>
-  <BugCode abbrev="DA">Don't use assertipns to validate method arguments</BugCode>
+  <BugCode abbrev="DA">Misuse of assertions can be dangerous.</BugCode>
 </MessageCollection>
