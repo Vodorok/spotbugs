@@ -24,7 +24,18 @@ public class AssertSideEffect extends AssertDetector {
     private static List<String> SideEffectList;
     static {
         SideEffectList = new ArrayList<String>();
-        SideEffectList.add("java/util/List:remove");
+        SideEffectList.add("add");
+        SideEffectList.add("addAll");
+        SideEffectList.add("remove");
+        SideEffectList.add("removeAll");
+        SideEffectList.add("removeElement");    // Vector
+        SideEffectList.add("retainAll");        // Vector
+        SideEffectList.add("offer");            // Queue
+        SideEffectList.add("offerFirst");       // Dequeue
+        SideEffectList.add("offerLast");        // Dequeue
+        SideEffectList.add("removeFirstOccurence");        // Dequeue
+        SideEffectList.add("removeLastOccurence");        // Dequeue
+        SideEffectList.add("addIfAbsent");        // CopyOnWriteArraylist
     }
 
     private final NoSideEffectMethodsDatabase noSideEffectMethods;
