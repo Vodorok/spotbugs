@@ -42,6 +42,9 @@ public class MET01Detector extends AbstractAssertDetector {
         super.visitClassContext(classContext);
     }
 
+    /**
+     * Checks if the methods paramaeter is an initial arg.
+     */
     private boolean isInitialArg() {
         XMethod m = getXMethodOperand();
         int numPar = m.getNumParams();
@@ -54,6 +57,9 @@ public class MET01Detector extends AbstractAssertDetector {
         return false;
     }
 
+    /**
+     * Returns true if the opcode is a method invocation false otherwise
+     */
     private boolean isMethodCall(int seen) {
         boolean methodCall = false;
         if (seen == Const.INVOKESTATIC ||
@@ -65,6 +71,9 @@ public class MET01Detector extends AbstractAssertDetector {
         return methodCall;
     }
 
+    /**
+     * Returns the numbor of arguments that is popped from the stack for the given opcode
+     */
     private int checkSeen(int seen) {
         int stackSize = 0;
         switch (seen) {
@@ -105,20 +114,25 @@ public class MET01Detector extends AbstractAssertDetector {
         return stackSize;
     }
 
+    /**
+     * Finds MET01 rule violating assertions. 
+     */
     @Override
     protected void detect(int seen) {
         boolean wasArg = false;
+        // Handle method call
         if (isMethodCall(seen)) {
             // If wasArg have not been found - Nested methods
             if (!wasArg)
                 wasArg = isInitialArg();
-        }
-        int stackSize = checkSeen(seen);
-        if (stackSize > 0) {
-            for (int i = 0; i < stackSize; i++) {
-                OpcodeStack.Item item = stack.getStackItem(i);
-                if (!wasArg)
+            // Handle comparison
+        } else {
+            int stackSize = checkSeen(seen);
+            if (stackSize > 0) {
+                for (int i = 0; i < stackSize; i++) {
+                    OpcodeStack.Item item = stack.getStackItem(i);
                     wasArg = item.isInitialParameter();
+                }
             }
         }
         if (wasArg) {

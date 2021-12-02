@@ -7,7 +7,7 @@ import edu.umd.cs.findbugs.BugReporter;
 import edu.umd.cs.findbugs.bcel.OpcodeStackDetector;
 
 /**
- * This detector can find constructors that throw exception.
+ * Abstract base class for finding assertions
  */
 public abstract class AbstractAssertDetector extends OpcodeStackDetector {
 
@@ -19,6 +19,9 @@ public abstract class AbstractAssertDetector extends OpcodeStackDetector {
         this.bugReporter = bugReporter;
     }
 
+    /**
+     * Implement this method in a concrete detector
+     */
     abstract protected void detect(int seen);
 
     /**

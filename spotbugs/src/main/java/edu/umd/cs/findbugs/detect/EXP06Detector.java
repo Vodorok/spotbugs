@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * This detector can find constructors that throw exception.
+ * This detector can find assertions that violates the EXP06 rule.
  */
 public class EXP06Detector extends AbstractAssertDetector {
     //private static final boolean CACHE = SystemProperties.getBoolean("da.se.usecache");
@@ -54,6 +54,9 @@ public class EXP06Detector extends AbstractAssertDetector {
         return false;
     }
 
+    /**
+     * Returns true if the opcode is a method invocation false otherwise
+     */
     private boolean isMethodCall(int seen) {
         boolean methodCall = false;
         if (seen == Const.INVOKESTATIC ||
@@ -65,6 +68,9 @@ public class EXP06Detector extends AbstractAssertDetector {
         return methodCall;
     }
 
+    /**
+     * Returns true if the opcode is a side effect producing instruction
+     */
     private boolean checkSeen(int seen) {
         switch (seen) {
         case Const.IINC:
@@ -79,6 +85,9 @@ public class EXP06Detector extends AbstractAssertDetector {
         }
     }
 
+    /**
+     * Finds assertion which violates the EXP06 rule
+     */
     @Override
     protected void detect(int seen) {
         if (isMethodCall(seen)) {
