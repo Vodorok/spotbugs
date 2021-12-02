@@ -651,9 +651,9 @@
                     reports="JUA_DONT_ASSERT_INSTANCEOF_IN_TESTS"/>
           <Detector class="edu.umd.cs.findbugs.detect.FindBadEndOfStreamCheck" speed="fast"
                     reports="EOS_BAD_END_OF_STREAM_CHECK"/>
-          <Detector class="edu.umd.cs.findbugs.detect.AssertArgs" speed="fast"
+          <Detector class="edu.umd.cs.findbugs.detect.MET01Detector" speed="fast"
                     reports="DA_DONT_ASSERT_ARGS"/>
-          <Detector class="edu.umd.cs.findbugs.detect.AssertSideEffect" speed="fast"
+          <Detector class="edu.umd.cs.findbugs.detect.EXP06Detector" speed="fast"
                     reports="DA_DONT_ASSERT_SIDE_EFFECT,DA_DONT_ASSERT_SIDE_EFFECT_METHOD"/>
             <!-- Bug Categories -->
            <BugCategory category="NOISE" hidden="true"/>

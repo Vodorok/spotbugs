@@ -12,20 +12,17 @@ import edu.umd.cs.findbugs.ba.ClassContext;
 import edu.umd.cs.findbugs.ba.XMethod;
 
 /**
- * This detector can find constructors that throw exception.
+ * This detector can find Assertions that try to validate method
+ * arguments.
  */
-public class AssertArgs extends AssertDetector {
+public class MET01Detector extends AbstractAssertDetector {
 
-    //private boolean wasArg = false;
-
-    public AssertArgs(BugReporter bugReporter) {
+    public MET01Detector(BugReporter bugReporter) {
         super(bugReporter);
     }
 
     /**
-     * Visit a class to find the constructor, then collect all the methods that gets called in it.
-     * Also we are checking for final declaration on the class, or a final finalizer, as if present
-     * no finalizer attack can happen.
+     * Only interested in public methods
      */
     @Override
     public void visit(Method obj) {
@@ -33,6 +30,9 @@ public class AssertArgs extends AssertDetector {
             return;
     }
 
+    /**
+     * Only interested in public classes
+     */
     @Override
     public void visitClassContext(ClassContext classContext) {
         JavaClass ctx = classContext.getJavaClass();
@@ -61,11 +61,6 @@ public class AssertArgs extends AssertDetector {
                 seen == Const.INVOKEINTERFACE ||
                 seen == Const.INVOKESPECIAL) {
             methodCall = true;
-            // Edge case for AssertionError ctor
-            // We are not interesed in assert message params
-            //if (getClassConstantOperand().equals("java/lang/AssertionError")) {
-            //    methodCall = false;
-            //}
         }
         return methodCall;
     }
@@ -92,12 +87,6 @@ public class AssertArgs extends AssertDetector {
     }
 
     @Override
-    protected void resetState() {
-        //wasArg = false;
-        super.resetState();
-    }
-
-    @Override
     void detect(int seen) {
         boolean wasArg = false;
         if (isMethodCall(seen)) {
@@ -120,6 +109,5 @@ public class AssertArgs extends AssertDetector {
             reportBug(bug);
         }
         wasArg = false;
-        //resetState();
     }
 }

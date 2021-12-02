@@ -9,20 +9,21 @@ import edu.umd.cs.findbugs.bcel.OpcodeStackDetector;
 /**
  * This detector can find constructors that throw exception.
  */
-public abstract class AssertDetector extends OpcodeStackDetector {
+public abstract class AbstractAssertDetector extends OpcodeStackDetector {
 
     private final BugReporter bugReporter;
 
     protected boolean inAssert = false;
 
-    public AssertDetector(BugReporter bugReporter) {
+    public AbstractAssertDetector(BugReporter bugReporter) {
         this.bugReporter = bugReporter;
     }
 
     abstract void detect(int seen);
 
     /**
-     * If the class is final, we are fine, no finalizer attack can happen.
+     * Searches for assertion opening, and closing points.
+     * When in assert, will call the detect method.
      */
     @Override
     public void sawOpcode(int seen) {
@@ -33,7 +34,6 @@ public abstract class AssertDetector extends OpcodeStackDetector {
             inAssert = true;
         }
         if (seen == Const.NEW && getClassConstantOperand().equals("java/lang/AssertionError")) {
-            //if (seen == Const.INVOKESPECIAL && getClassConstantOperand().equals("java/lang/AssertionError")) {
             resetState();
         }
     }

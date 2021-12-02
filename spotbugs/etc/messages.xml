@@ -166,7 +166,7 @@ This plugin contains all of the standard SpotBugs detectors.
   Detectors
   **********************************************************************
    -->
-  <Detector class="edu.umd.cs.findbugs.detect.AssertArgs">
+  <Detector class="edu.umd.cs.findbugs.detect.MET01Detector">
     <Details>
 <![CDATA[
 <p> Finds assertions that validates public method arguments.
@@ -174,7 +174,7 @@ This plugin contains all of the standard SpotBugs detectors.
 ]]>
     </Details>
   </Detector>
-  <Detector class="edu.umd.cs.findbugs.detect.AssertSideEffect">
+  <Detector class="edu.umd.cs.findbugs.detect.EXP06Detector">
     <Details>
 <![CDATA[
 <p> Finds assertions with side effects.
