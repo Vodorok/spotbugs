@@ -80,7 +80,7 @@ public class EXP06Detector extends AbstractAssertDetector {
     }
 
     @Override
-    void detect(int seen) {
+    protected void detect(int seen) {
         if (isMethodCall(seen)) {
             StringBuilder sb = new StringBuilder(getClassConstantOperand());
             sb.append(":");

@@ -19,7 +19,7 @@ public abstract class AbstractAssertDetector extends OpcodeStackDetector {
         this.bugReporter = bugReporter;
     }
 
-    abstract void detect(int seen);
+    abstract protected void detect(int seen);
 
     /**
      * Searches for assertion opening, and closing points.

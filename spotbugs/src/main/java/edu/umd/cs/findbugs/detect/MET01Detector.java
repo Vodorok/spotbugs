@@ -68,16 +68,35 @@ public class MET01Detector extends AbstractAssertDetector {
     private int checkSeen(int seen) {
         int stackSize = 0;
         switch (seen) {
+            // Handle nullchecks
         case Const.IFNONNULL:
         case Const.IFNULL:
+        case Const.IFEQ :
+        case Const.IFNE :
+        case Const.IFLT :
+        case Const.IFLE :
+        case Const.IFGT :
+        case Const.IFGE :
             stackSize = 1;
             break;
+            // Handle integer comparison
         case Const.IF_ICMPEQ:
         case Const.IF_ICMPNE:
         case Const.IF_ICMPLT:
         case Const.IF_ICMPLE:
         case Const.IF_ICMPGT:
         case Const.IF_ICMPGE:
+            // Handle long
+        case Const.LCMP:
+            // Handle float comparison
+        case Const.FCMPG:
+        case Const.FCMPL:
+            // Handle double comparison
+        case Const.DCMPG:
+        case Const.DCMPL:
+            // Reference equality
+        case Const.IF_ACMPEQ:
+        case Const.IF_ACMPNE:
             stackSize = 2;
             break;
         default:
@@ -87,7 +106,7 @@ public class MET01Detector extends AbstractAssertDetector {
     }
 
     @Override
-    void detect(int seen) {
+    protected void detect(int seen) {
         boolean wasArg = false;
         if (isMethodCall(seen)) {
             // If wasArg have not been found - Nested methods
