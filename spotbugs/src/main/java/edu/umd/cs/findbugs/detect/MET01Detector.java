@@ -68,18 +68,18 @@ public class MET01Detector extends AbstractAssertDetector {
     private int checkSeen(int seen) {
         int stackSize = 0;
         switch (seen) {
-            // Handle nullchecks
+        // Handle nullchecks
         case Const.IFNONNULL:
         case Const.IFNULL:
-        case Const.IFEQ :
-        case Const.IFNE :
-        case Const.IFLT :
-        case Const.IFLE :
-        case Const.IFGT :
-        case Const.IFGE :
+        case Const.IFEQ:
+        case Const.IFNE:
+        case Const.IFLT:
+        case Const.IFLE:
+        case Const.IFGT:
+        case Const.IFGE:
             stackSize = 1;
             break;
-            // Handle integer comparison
+        // Handle integer comparison
         case Const.IF_ICMPEQ:
         case Const.IF_ICMPNE:
         case Const.IF_ICMPLT:
