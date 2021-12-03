@@ -141,6 +141,5 @@ public class MET01Detector extends AbstractAssertDetector {
                     .addSourceLine(this, getPC());
             reportBug(bug);
         }
-        wasArg = false;
     }
 }
